@@ -1,0 +1,2 @@
+class AttendanceWindow < ApplicationRecord
+end
