@@ -52,11 +52,21 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # RSpec testing framework
+  gem "rspec-rails", "~> 8.0"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+
+  # Ruby code linting
+  gem "rubocop", "~> 1.81"
+
+  # Ruby language server protocol
+  gem "ruby-lsp", "~> 0.26.4", require: false
+  gem "ruby-lsp-rails", "~> 0.4.8", require: false
 end
 
 group :test do
@@ -64,5 +74,3 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-
-gem "rspec-rails", "~> 8.0"
