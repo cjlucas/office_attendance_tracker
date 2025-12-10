@@ -1,5 +1,4 @@
 class ExclusionPeriod < ApplicationRecord
-
   def self.single_day(date)
     new(start_date: date, end_date: date)
   end
