@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   namespace :api do
     resources :attendances, only: [ :create ]
+
+    resources :attendance_windows, only: [] do
+      get :active, on: :collection
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

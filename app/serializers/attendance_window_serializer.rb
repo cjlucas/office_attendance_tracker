@@ -29,6 +29,6 @@ class AttendanceWindowSerializer
   end
 
   def attendance_count
-    @window.attendances.count
+    Attendance.where(date: @window.start_date..@window.end_date).count
   end
 end
