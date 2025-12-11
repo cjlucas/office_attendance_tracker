@@ -13,9 +13,12 @@ class AttendanceWindow < ApplicationRecord
     where("start_date <= ? AND end_date >= ?", today, today)
   }
 
-  # Instance methods
   def days_remaining
     (end_date - Date.today).to_i + 1
+  end
+
+  def attendances
+    Attendance.where(date: start_date..end_date)
   end
 
   # Validators
