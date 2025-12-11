@@ -1,34 +1,9 @@
-class AttendanceWindowSerializer
-  MODEL_FIELDS = %w[
-    id
-    start_date
-    end_date
-    days_remaining
-    created_at
-    updated_at
-  ]
+class AttendanceWindowSerializer < Blueprinter::Base
+  identifier :id
 
-  SERIALIZER_FIELDS = %w[
-    attendance_count
-  ]
+  fields :start_date, :end_date, :created_at, :updated_at, :days_remaining
 
-  def initialize(window)
-    @window = window
-  end
-
-  def as_json
-    model_fields = MODEL_FIELDS.each_with_object({}) do |field, acc|
-      acc[field] = @window.send(field)
-    end
-
-    serializer_fields = SERIALIZER_FIELDS.each_with_object({}) do |field, acc|
-      acc[field] = send(field)
-    end
-
-    model_fields.merge(serializer_fields)
-  end
-
-  def attendance_count
-    @window.attendances.count
+  field :attendance_count do |window|
+    window.attendances.count
   end
 end

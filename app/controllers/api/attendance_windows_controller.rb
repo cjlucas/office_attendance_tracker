@@ -1,9 +1,5 @@
 class Api::AttendanceWindowsController < ActionController::API
   def active
-    windows = AttendanceWindow.active.map do |window|
-      AttendanceWindowSerializer.new(window)
-    end
-
-    render json: windows
+    render json: AttendanceWindowSerializer.render(AttendanceWindow.active)
   end
 end
