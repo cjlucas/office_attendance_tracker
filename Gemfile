@@ -64,7 +64,7 @@ group :development do
   gem "web-console"
 
   # Ruby code linting
-  gem "rubocop", "~> 1.81"
+  gem "rubocop", "~> 1.82"
 
   # Ruby language server protocol
   gem "ruby-lsp", "~> 0.26.4", require: false
