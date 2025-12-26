@@ -20,7 +20,7 @@ class AttendanceWindowSummary
   end
 
   def days_remaining
-    start = [Date.current, @attendance_window.start_date].max
+    start = [ Date.current, @attendance_window.start_date ].max
     (start..@attendance_window.end_date).to_a.intersection(workdays)
   end
 
