@@ -1,9 +1,11 @@
 <h1>C1 Attendance Tracker</h1>
 
 <h2>Recent Attendances</h2>
-<% recent_attendance.each do |attendance| %>
+<div id="recent-attendances">
+  <% recent_attendance.each do |attendance| %>
     <p><%= attendance.date %></p>
-<% end %>
+  <% end %>
+</div>
 
 <h2>Active Attendance Windows</h2>
 <table>
