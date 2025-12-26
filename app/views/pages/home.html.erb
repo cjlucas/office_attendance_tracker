@@ -1,0 +1,50 @@
+<h1>C1 Attendance Tracker</h1>
+
+<h2>Recent Attendances</h2>
+<div id="recent-attendances">
+  <% recent_attendance.each do |attendance| %>
+    <p><%= attendance.date %></p>
+  <% end %>
+</div>
+
+<h2>Active Attendance Windows</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Start</th>
+      <th>End</th>
+      <th>Days attended</th>
+      <th>Attendance remaining</th>
+      <th>Days remaining</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% active_attendance_windows.each do |window| %>
+      <tr>
+        <td><%= window.start_date %></td>
+        <td><%= window.end_date %></td>
+        <td><%= window.summary.days_attended.count %></td>
+        <td><%= window.summary.required_attendances_remaining %></td>
+        <td><%= window.summary.days_remaining.count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Upcoming Exclusion Periods</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Start</th>
+      <th>End</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% upcoming_exclusion_periods.each do |period| %>
+      <tr>
+        <td><%= period.start_date %></td>
+        <td><%= period.end_date %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

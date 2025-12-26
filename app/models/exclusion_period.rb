@@ -9,4 +9,8 @@ class ExclusionPeriod < ApplicationRecord
   def days
     self.start_date
   end
+
+  def to_range
+    start_date..end_date
+  end
 end

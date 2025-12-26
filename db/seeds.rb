@@ -27,11 +27,16 @@ def seed_exclusion_period(start_date, end_date)
   end
 end
 
+today = Date.current
+
 puts "Seeding attendance windows..."
 
-# Generate rolling 3-month windows for 2025-2027
-# A new window starts each month
-(Date.new(2025, 1, 1)..Date.new(2027, 12, 1)).select { |d| d.day == 1 }.each do |start_date|
+# Generate rolling 3-month windows from 1 year ago to 1 year in the future
+# A new window starts on the 1st of each month
+window_start = (today - 1.year).beginning_of_month
+window_end = (today + 1.year).beginning_of_month
+
+(window_start..window_end).select { |d| d.day == 1 }.each do |start_date|
   end_date = start_date + 3.months - 1.day
 
   AttendanceWindow.find_or_create_by!(start_date: start_date) do |window|
@@ -41,40 +46,43 @@ end
 
 puts "Seeding exclusion periods..."
 
-# Winter holidays (year-end shutdown)
-seed_exclusion_period(Date.new(2024, 12, 24), Date.new(2024, 12, 31))
-seed_exclusion_period(Date.new(2025, 12, 24), Date.new(2025, 12, 31))
-seed_exclusion_period(Date.new(2026, 12, 24), Date.new(2026, 12, 31))
+# Winter holidays (year-end shutdown) - last week of December
+# Create for last year, this year, and next year
+[ today.year - 1, today.year, today.year + 1 ].each do |year|
+  seed_exclusion_period(Date.new(year, 12, 24), Date.new(year, 12, 31))
+end
 
-# Company-wide events (hypothetical all-hands in Q1 each year)
-seed_exclusion_period(Date.new(2025, 1, 20), Date.new(2025, 1, 22))
-seed_exclusion_period(Date.new(2026, 1, 19), Date.new(2026, 1, 21))
-seed_exclusion_period(Date.new(2027, 1, 18), Date.new(2027, 1, 20))
+# Company-wide events (hypothetical all-hands in mid-January)
+[ today.year - 1, today.year, today.year + 1 ].each do |year|
+  seed_exclusion_period(Date.new(year, 1, 18), Date.new(year, 1, 20))
+end
 
-# Summer shutdowns
-seed_exclusion_period(Date.new(2025, 7, 1), Date.new(2025, 7, 7))
-seed_exclusion_period(Date.new(2026, 7, 1), Date.new(2026, 7, 7))
-seed_exclusion_period(Date.new(2027, 7, 1), Date.new(2027, 7, 7))
+# Summer shutdowns (first week of July)
+[ today.year - 1, today.year, today.year + 1 ].each do |year|
+  seed_exclusion_period(Date.new(year, 7, 1), Date.new(year, 7, 7))
+end
 
 puts "Seeding attendance records..."
 
-# Historical attendance (Oct 2024 - Nov 2024)
-seed_attendance_for_range(Date.new(2024, 10, 1), Date.new(2024, 11, 30))
+# Generate attendance for past dates only (last 6 months up to yesterday)
+attendance_start = today - 6.months
+attendance_end = today - 1.day
 
-# Recent attendance (Dec 2024 - skip exclusion period for winter holidays)
-seed_attendance_for_range(Date.new(2024, 12, 1), Date.new(2024, 12, 23))
+seed_attendance_for_range(attendance_start, attendance_end)
 
-# Current attendance (Jan 2025)
-seed_attendance_for_range(Date.new(2025, 1, 1), Date.new(2025, 1, 19))
-# Skip Jan 20-22 (company event exclusion)
-seed_attendance_for_range(Date.new(2025, 1, 23), Date.new(2025, 1, 31))
+# Add a couple weekend attendances (rare examples) in the past 3 months
+past_saturday = today - 8.weeks
+past_saturday = past_saturday - (past_saturday.wday - 6) % 7 # Find the most recent Saturday
+Attendance.find_or_create_by!(date: past_saturday) if past_saturday < today
 
-# Weekend attendances (rare, but as examples)
-Attendance.find_or_create_by!(date: Date.new(2024, 11, 9))  # Saturday
-Attendance.find_or_create_by!(date: Date.new(2025, 1, 5))   # Sunday
+past_sunday = today - 4.weeks
+past_sunday = past_sunday - past_sunday.wday # Find the most recent Sunday
+Attendance.find_or_create_by!(date: past_sunday) if past_sunday < today
 
 # Attendance during an exclusion period (user came in anyway)
-Attendance.find_or_create_by!(date: Date.new(2024, 12, 27)) # During winter holidays
+# Find a winter holiday period in the past
+last_winter = Date.new(today.year - 1, 12, 27)
+Attendance.find_or_create_by!(date: last_winter) if last_winter < today
 
 puts "Seed data created successfully!"
 puts "- #{AttendanceWindow.count} attendance windows"

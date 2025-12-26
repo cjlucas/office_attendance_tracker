@@ -17,6 +17,18 @@ class AttendanceWindow < ApplicationRecord
     Attendance.where(date: start_date..end_date)
   end
 
+  def exclusion_periods
+    ExclusionPeriod.where("start_date <= ? AND end_date >= ?", end_date, start_date)
+  end
+
+  def summary
+    @summary ||= AttendanceWindowSummary.new(self)
+  end
+
+  def to_range
+    start_date..end_date
+  end
+
   # Validators
   def end_date_on_or_after_start_date
     if end_date < start_date
