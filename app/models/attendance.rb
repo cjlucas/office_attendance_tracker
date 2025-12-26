@@ -4,4 +4,8 @@ class Attendance < ApplicationRecord
   def self.in_window(window)
     Attendance.where(Attendance.arel_table[:date].between(window.start_date..window.end_date))
   end
+
+  def to_date
+    date
+  end
 end

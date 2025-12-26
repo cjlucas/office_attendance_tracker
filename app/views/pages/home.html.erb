@@ -16,9 +16,9 @@
 	<tr>
 	    <td><%= window.start_date %></td>
 	    <td><%= window.end_date %></td>
-	    <td><%= valid_days_attended(window).count %></td>
-	    <td><%= required_attendances_remaining(window) %></td>
-	    <td><%= applicable_days_remaining(window) %></td>
+	    <td><%= window.summary.days_attended.count %></td>
+	    <td><%= window.summary.required_attendances_remaining %></td>
+	    <td><%= window.summary.days_remaining.count %></td>
 	</tr>
     <% end %>
 </table>
