@@ -192,7 +192,7 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.7.0)
+    prism (1.8.0)
     propshaft (1.3.1)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
@@ -249,7 +249,7 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.3.1)
-    rbs (3.9.5)
+    rbs (3.10.2)
       logger
     rdoc (7.0.3)
       erb
@@ -304,7 +304,7 @@ GEM
       rubocop (>= 1.72)
       rubocop-performance (>= 1.24)
       rubocop-rails (>= 2.30)
-    ruby-lsp (0.26.4)
+    ruby-lsp (0.26.5)
       language_server-protocol (~> 3.17.0)
       prism (>= 1.2, < 2.0)
       rbs (>= 3, < 5)
@@ -404,7 +404,7 @@ DEPENDENCIES
   rspec-rails (~> 8.0)
   rubocop (~> 1.82)
   rubocop-rails-omakase
-  ruby-lsp (~> 0.26.4)
+  ruby-lsp (~> 0.26.5)
   ruby-lsp-rails (~> 0.4.8)
   selenium-webdriver
   solid_cable
