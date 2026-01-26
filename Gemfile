@@ -64,7 +64,7 @@ group :development do
   gem "rubocop", "~> 1.82"
 
   # Ruby language server protocol
-  gem "ruby-lsp", "~> 0.26.4", require: false
+  gem "ruby-lsp", "~> 0.26.5", require: false
   gem "ruby-lsp-rails", "~> 0.4.8", require: false
 end
 
